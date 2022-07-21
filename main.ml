@@ -21,6 +21,7 @@ let rec at l x = match l with
 let rec length l = match l with
     | [] -> 0
     | hd :: tail -> 1 + (length tail);;
+
 (* 04 Tail recursive version *)
 let length_tail l =
     let rec iter l c = match l with
@@ -33,4 +34,8 @@ let length_tail l =
 let rec rev l = match l with
     | [] -> []
     | hd :: tail -> (rev tail) @ [hd];;
+
+(* 06 *)
+let is_palindrome l =
+    (rev l) = l;;
 
