@@ -7,6 +7,8 @@ let rec last = function
 (* 02 *)
 let rec last_two = function
     | [] -> None
-    | [x; y] -> Some [x; y]
-    | [x] -> None
-    | _ :: rest -> last_two rest
+    | [x; y] -> Some (x, y)
+    | [_] -> None
+    | _ :: rest -> last_two rest;;
+
+(* 03 *)
