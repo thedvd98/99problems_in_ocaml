@@ -14,6 +14,6 @@ let rec last_two = function
 (* 03 *)
 let rec at l x = match l with
     | [] -> None
-    | hd :: tail when x = 1 -> Some hd
+    | hd :: tail when x = 0 -> Some hd
     | hd :: tail -> at tail (x - 1)
 
