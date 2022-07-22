@@ -50,4 +50,16 @@ let rec flatten = function
     | Many x :: tail -> (flatten x) @ (flatten tail)
 ;;
 
-
+(* 08 *)
+let rec compress = function
+    | [] -> []
+    | [x] -> [x]
+    | hd :: tail ->
+            match tail with
+                | [] -> []
+                | next_hd :: next_tail ->
+                        if hd = next_hd then
+                            (compress (hd::next_tail))
+                        else
+                            hd::(compress (next_hd::next_tail))
+;;
