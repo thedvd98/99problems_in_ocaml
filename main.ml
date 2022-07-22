@@ -51,6 +51,7 @@ let rec flatten = function
 ;;
 
 (* 08 *)
+(* my version *)
 let rec compress = function
     | [] -> []
     | [x] -> [x]
@@ -63,3 +64,7 @@ let rec compress = function
                         else
                             hd::(compress (next_hd::next_tail))
 ;;
+(* solution version *)
+let rec compress_easy = function
+    | a :: (b :: _ as tail) -> if a = b then compress tail else a :: compress tail
+    | smaller -> smaller;;
