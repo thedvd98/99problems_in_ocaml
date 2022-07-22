@@ -39,3 +39,15 @@ let rec rev l = match l with
 let is_palindrome l =
     (rev l) = l;;
 
+(* 07 *)
+type 'a node =
+    | One of 'a
+    | Many of 'a node list;;
+
+let rec flatten = function
+    | [] -> []
+    | One x :: tail -> x :: (flatten tail)
+    | Many x :: tail -> (flatten x) @ (flatten tail)
+;;
+
+
