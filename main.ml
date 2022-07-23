@@ -68,3 +68,22 @@ let rec compress = function
 let rec compress_easy = function
     | a :: (b :: _ as tail) -> if a = b then compress tail else a :: compress tail
     | smaller -> smaller;;
+
+(* 09 *)
+let rec tail_from l n = match l with
+    | [] -> []
+    | x when n <= 0 -> x
+    | hd :: tail -> tail_from tail (n-1)
+;;
+let rec pack l =
+    let rec iter li = match li with
+    | a :: (b :: _ as tail) -> if a = b then a :: (iter tail) else [a]
+    | [] -> []
+    | x -> x
+    in
+    match l with
+        | [] -> []
+        | _ :: tail -> let part = (iter l)
+    in
+        part :: (pack (tail_from l (List.length part)))
+;;
