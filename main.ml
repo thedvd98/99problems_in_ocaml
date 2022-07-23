@@ -70,11 +70,12 @@ let rec compress_easy = function
     | smaller -> smaller;;
 
 (* 09 *)
+(* my version *)
 let rec tail_from l n = match l with
     | [] -> []
     | x when n <= 0 -> x
-    | hd :: tail -> tail_from tail (n-1)
-;;
+    | hd :: tail -> tail_from tail (n-1);;
+
 let rec pack l =
     let rec iter li = match li with
     | a :: (b :: _ as tail) -> if a = b then a :: (iter tail) else [a]
@@ -85,5 +86,13 @@ let rec pack l =
         | [] -> []
         | _ :: tail -> let part = (iter l)
     in
-        part :: (pack (tail_from l (List.length part)))
-;;
+        part :: (pack (tail_from l (List.length part)));;
+(* solution version *)
+let pack_best list =
+    let rec aux current acc = function
+      | [] -> []    (* Can only be reached if original list is empty *)
+      | [x] -> (x :: current) :: acc
+      | a :: (b :: _ as t) ->
+         if a = b then aux (a :: current) acc t
+         else aux [] ((a :: current) :: acc) t  in
+    List.rev (aux [] [] list);;
