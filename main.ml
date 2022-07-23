@@ -95,9 +95,9 @@ let pack_best l =
         | a :: (b :: _ as tail) ->
                 if a = b then
                     aux (a::current) acc tail
-                else
-                    aux [] ((a::current)::acc) tail
-    in
+    else
+        aux [] ((a::current)::acc) tail
+        in
     List.rev (aux [] [] l);;
 
 
@@ -111,9 +111,9 @@ let encode li =
             if a = b then
                 let (n, _) = last in
                 iter tail (n+1, a) acc
-            else
-                iter tail (1, b) (last :: acc)
-    in
+                else
+                    iter tail (1, b) (last :: acc)
+                in
     List.rev(iter li (1, "DIO") []);;
 (* Version using pack *)
 let encode_short li =
@@ -121,7 +121,7 @@ let encode_short li =
 
 (* 11 *)
 type 'a rle =
-  | One of 'a
+    | One of 'a
   | Many of int * 'a
 
 let encode_short_mod li =
@@ -136,7 +136,7 @@ let rec decode li =
     let rec make_list a count = match count with
         | 0 -> []
         | _ -> a::(make_list a (count - 1))
-    in
+        in
     let decode_tuple = function
         | One a -> [a]
         | Many (count, a) -> (make_list a count)
@@ -156,4 +156,32 @@ let rec decode_best li =
         | One a :: tail -> [a] @ (decode_best tail)
         | Many (count, a) :: tail -> (make_list a count) @ (decode tail);;
 
+(* 13 *)
+(* Run-length encoding of a list (direct solution) *)
 
+let encode_rle li = 
+    let make_many a count =
+        (Many (count, a))
+    in
+    let make_one a =
+        (One a)
+    in
+    let rec iter l count = match l with
+        | [] -> []
+        | a :: (b :: _ as tail) ->
+                if a = b then
+                    iter tail (count + 1)
+        else
+            if count > 1 then
+                (make_many a count) :: (iter tail 1)
+            else
+                (make_one a) :: (iter tail 1)
+        | [x] ->
+                if count > 1 then
+                    [(make_many x count)]
+                else
+                    [(make_one x)]
+
+    in
+    (iter li 1)
+;;
