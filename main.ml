@@ -119,4 +119,15 @@ let encode li =
 let encode_short li =
     List.map (fun l -> (List.length l, List.hd l)) (pack li);;
 
+(* 11 *)
+type 'a rle =
+  | One of 'a
+  | Many of int * 'a
+
+let encode_short_mod li =
+    List.map (fun l ->
+        let len = List.length l in
+        if len = 1 then One (List.hd l) else (Many (len, List.hd l)))
+    (pack li);;
+
 
