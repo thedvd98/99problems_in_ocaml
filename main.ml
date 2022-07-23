@@ -88,11 +88,35 @@ let rec pack l =
     in
         part :: (pack (tail_from l (List.length part)));;
 (* solution version *)
-let pack_best list =
+let pack_best l =
     let rec aux current acc = function
-      | [] -> []    (* Can only be reached if original list is empty *)
-      | [x] -> (x :: current) :: acc
-      | a :: (b :: _ as t) ->
-         if a = b then aux (a :: current) acc t
-         else aux [] ((a :: current) :: acc) t  in
-    List.rev (aux [] [] list);;
+        | [] -> []
+        | [x] -> (x::current)::acc
+        | a :: (b :: _ as tail) ->
+                if a = b then
+                    aux (a::current) acc tail
+                else
+                    aux [] ((a::current)::acc) tail
+    in
+    List.rev (aux [] [] l);;
+
+
+(* 10 *)
+(* Run length encoding *)
+let encode li = 
+    let rec iter l last acc = match l with
+    | [] -> []
+    | [x] -> (last :: acc)
+    | a :: (b :: _ as tail) ->
+            if a = b then
+                let (n, _) = last in
+                iter tail (n+1, a) acc
+            else
+                iter tail (1, b) (last :: acc)
+    in
+    List.rev(iter li (1, "DIO") []);;
+(* Version using pack *)
+let encode_short li =
+    List.map (fun l -> (List.length l, List.hd l)) (pack li);;
+
+
