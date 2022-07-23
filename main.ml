@@ -130,4 +130,30 @@ let encode_short_mod li =
         if len = 1 then One (List.hd l) else (Many (len, List.hd l)))
     (pack li);;
 
+(* 12 *)
+(* my solution *)
+let rec decode li =
+    let rec make_list a count = match count with
+        | 0 -> []
+        | _ -> a::(make_list a (count - 1))
+    in
+    let decode_tuple = function
+        | One a -> [a]
+        | Many (count, a) -> (make_list a count)
+    in
+    match li with
+        | [] -> []
+        | hd :: tail -> (decode_tuple hd) @ (decode tail);;
+
+(* solution *)
+let rec decode_best li =
+    let rec make_list a count = match count with
+        | 0 -> []
+        | _ -> a::(make_list a (count - 1))
+    in
+    match li with
+        | [] -> []
+        | One a :: tail -> [a] @ (decode_best tail)
+        | Many (count, a) :: tail -> (make_list a count) @ (decode tail);;
+
 
