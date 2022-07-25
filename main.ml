@@ -185,3 +185,13 @@ let encode_rle li =
     in
     (iter li 1)
 ;;
+
+(* 14 *)
+(* Duplicate the elements of a list *)
+
+let rec duplicate li = match li with
+    | [] -> []
+    | [x] -> [x; x]
+    | hd :: tail -> hd::hd::(duplicate tail);;
+
+
