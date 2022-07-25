@@ -195,3 +195,18 @@ let rec duplicate li = match li with
     | hd :: tail -> hd::hd::(duplicate tail);;
 
 
+(* 15 *)
+(* Replicate the elements of a list a given number of times *)
+
+let replicate li n =
+    let rec iter li n count = match li with
+        | [] -> []
+        | [x] when count > 1 -> x::(iter li n (count - 1))
+        | [x] when count <= 1 -> [x]
+        | hd :: tail when count > 1 ->
+                hd::(iter li n (count - 1))
+        | hd :: tail when count <= 1 ->
+                hd::(iter tail n n)
+        | _ -> []
+    in
+    iter li n n;;
