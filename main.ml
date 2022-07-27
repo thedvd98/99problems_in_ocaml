@@ -222,5 +222,16 @@ let drop li n =
         else
           hd :: (iter tail (count-1))
     in
-    iter li (n-1)
+    iter li (n-1);;
 
+(* 17 *)
+(* Split a list into two parts *)
+let rec split li c = match li with
+  | [] -> ([],[])
+  | hd :: t ->
+    if c > 0 then
+      let (a,b) = (split t (c-1)) in
+      (hd::a, b)
+    else
+      let (a,b) = (split t 0) in
+      (a, hd::b);;
