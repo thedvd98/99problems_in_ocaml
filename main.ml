@@ -235,3 +235,22 @@ let rec split li c = match li with
     else
       let (a,b) = (split t 0) in
       (a, hd::b);;
+
+let split_tail_recursive li n =
+  let rec iter li c acc = match li with
+    | [] -> acc
+    | hd :: t -> let (a,b) = acc in
+      if c > 0 then (iter t (c-1) (a@[hd], b))
+                    else (iter t 0 (a, b@[hd]))
+  in
+  iter li n ([], []);;
+
+(* 18 *)
+(* Extract a slice from a list *)
+let rec slice li st en = match li with
+  | [] -> []
+  | hd::t ->
+    if st < 1 && en >= 0 then
+      hd::(slice t (st-1) (en-1))
+    else
+      (slice t (st-1) (en-1));;
