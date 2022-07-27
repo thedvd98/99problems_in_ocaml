@@ -210,3 +210,17 @@ let replicate li n =
         | _ -> []
     in
     iter li n n;;
+
+(* 16 *)
+(* Drop every N'th element from a list *)
+let drop li n =
+    let rec iter li count = match li with
+      | [] -> []
+      | hd :: tail ->
+        if count = 0 then
+          (iter tail (n-1))
+        else
+          hd :: (iter tail (count-1))
+    in
+    iter li (n-1)
+
