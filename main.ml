@@ -254,3 +254,14 @@ let rec slice li st en = match li with
       hd::(slice t (st-1) (en-1))
     else
       (slice t (st-1) (en-1));;
+
+(* 19 *)
+(* rotate *)
+let rec rotate li n =
+  let length = List.length li in
+  let a = if length = 0 then 0 else n mod length in
+  if a <= 0 then
+    li
+  else
+    let (first_part, second_part) = split_tail_recursive li a in
+    second_part @ first_part;;
