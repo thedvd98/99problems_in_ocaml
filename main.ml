@@ -265,3 +265,18 @@ let rec rotate li n =
   else
     let (first_part, second_part) = split_tail_recursive li a in
     second_part @ first_part;;
+
+(* 20 *)
+(* remove K'th element *)
+let remove_at k li =
+  let rec iter c result = function
+    | [] -> result
+    | _::t when c = k -> (iter (c + 1) result t)
+    | hd::t -> (iter (c + 1) (hd::result) t)
+  in
+  List.rev (iter 0 [] li);;
+
+(* easier *)
+let rec remove_at_ k = function
+  | [] -> []
+  | hd::t -> if k = 0 then (remove_at_ (k-1) t) else hd::(remove_at_ (k-1) t);;
