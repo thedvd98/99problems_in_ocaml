@@ -280,3 +280,9 @@ let remove_at k li =
 let rec remove_at_ k = function
   | [] -> []
   | hd::t -> if k = 0 then (remove_at_ (k-1) t) else hd::(remove_at_ (k-1) t);;
+
+(* 21 *)
+let rec insert_at item k = function
+  | [] -> [item]
+  | hd::t as li -> if k = 0 then item::li else hd::(insert_at item (k-1) t);;
+
