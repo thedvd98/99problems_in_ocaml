@@ -286,3 +286,14 @@ let rec insert_at item k = function
   | [] -> [item]
   | hd::t as li -> if k = 0 then item::li else hd::(insert_at item (k-1) t);;
 
+(* 22 *)
+let range a b =
+  let rec aux a b li =
+    if a > b then li else (aux (a+1) b (a::li))
+  in
+  if a > b then
+    (aux b a [])
+  else
+    List.rev (aux a b [])
+
+(*  range 1 10000000000000 Process OCaml exited abnormally with code 137 *)
